@@ -208,17 +208,17 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.48129678
+      - time: 0.46384043
         functionName: BustFootStep
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11500000, guid: 258d79c7cfd3ebc4ba586f89832a2233, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.9172414
-        functionName: NewEvent
+        functionName: BustFootStep
         data: 
-        objectReferenceParameter: {instanceID: 0}
+        objectReferenceParameter: {fileID: 11500000, guid: 258d79c7cfd3ebc4ba586f89832a2233, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
