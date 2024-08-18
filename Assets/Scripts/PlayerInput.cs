@@ -6,11 +6,13 @@ public class PlayerInput : MonoBehaviour
 {
     public float horizontalInput;
     public float verticalInput;
+    public bool jumpInput;
 
     void Update()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
+        jumpInput = Input.GetButtonDown("Jump");
     }
 
     private void OnDisable()
