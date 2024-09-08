@@ -1739,6 +1739,7 @@ MonoBehaviour:
   horizontalInput: 0
   verticalInput: 0
   jumpInput: 0
+  speedUp: 0
 --- !u!95 &1385753608
 Animator:
   serializedVersion: 5
@@ -1788,6 +1789,7 @@ MonoBehaviour:
   speed: 5
   rotationSpeed: 5
   gravity: 20
+  SpeedScale: 1.3
 --- !u!114 &1471339993
 MonoBehaviour:
   m_ObjectHideFlags: 0

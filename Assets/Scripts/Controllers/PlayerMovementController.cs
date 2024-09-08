@@ -9,6 +9,7 @@ using UnityEngine;
 public class PlayerMovementController : MovementController
 {
     private PlayerInput _playerInput;
+    public float SpeedScale;
 
     protected override void Awake()
     {
@@ -18,8 +19,8 @@ public class PlayerMovementController : MovementController
 
     protected override void MoveCharacter()
     {
-        // Получаем ввод от игрока
-        _movementVelocity.Set(_playerInput.horizontalInput, 0, _playerInput.verticalInput);
+        _speedScale = _playerInput.speedUp ? SpeedScale : 1; 
+        _movementVelocity.Set(_playerInput.horizontalInput , 0, _playerInput.verticalInput );
         base.MoveCharacter(); 
     }
 }

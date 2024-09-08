@@ -11,6 +11,7 @@ public class MovementController : MonoBehaviour
     public float gravity = 9.8f;
     protected float _verticalVelocity;
     protected Vector3 _movementVelocity;
+    protected float _speedScale = 1f;
 
     protected CharacterController _characterController;
     protected AnimatorController _animatorController;
@@ -22,34 +23,29 @@ public class MovementController : MonoBehaviour
 
     protected virtual void MoveCharacter()
     {
-        _movementVelocity.Normalize(); // Нормализуем вектор, чтобы избежать ускорения по диагонали
+        _movementVelocity.Normalize(); 
 
-        // Применяем вращение в направлении движения
         if(_movementVelocity != Vector3.zero)
         {
             var targetRotation = Quaternion.LookRotation(_movementVelocity);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
-
-        // Обновляем скорость анимации
-        _animatorController.SetSpeed(_movementVelocity.magnitude);
-        // Учитываем вертикальную скорость
+         
+        _animatorController.SetSpeed(_movementVelocity.magnitude); 
         _movementVelocity += _verticalVelocity * Vector3.up;
-
-        // Двигаем CharacterController
-        _characterController.Move(_movementVelocity * speed * Time.deltaTime);
-
+         
+        _characterController.Move(_movementVelocity * speed * _speedScale * Time.deltaTime); 
     }
 
     protected virtual void ApplyGravity()
     {
         if(_characterController.isGrounded)
         {
-            _verticalVelocity = -gravity * 0.3f; // Небольшая сила притяжения, чтобы держать персонажа на земле
+            _verticalVelocity = -gravity * 0.3f;
         }
         else
         {
-            _verticalVelocity -= gravity * Time.deltaTime; // Увеличиваем силу падения с течением времени
+            _verticalVelocity -= gravity * Time.deltaTime;
         }
         _animatorController.SetFall(!_characterController.isGrounded); 
     }
