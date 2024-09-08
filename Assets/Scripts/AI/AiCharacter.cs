@@ -11,7 +11,8 @@ namespace Game.AI
         void ExitBehavior(AiCharacter character);  // Выход из поведения
     }
 
-
+    [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(AIController))]
     public abstract class AiCharacter : MonoBehaviour
     {
         public NavMeshAgent navAgent;
@@ -28,8 +29,8 @@ namespace Game.AI
             this.actionRange = actionRange;
             navAgent = GetComponent<NavMeshAgent>();
 
-            _aiController = GetComponent<AIController>(); // Получаем AIController
-            _aiController.Initialize(this); // Инициализируем контроллер
+            _aiController = GetComponent<AIController>(); 
+            _aiController.Initialize(this);
         }
 
         public void SetBehavior(IAIBehavior newBehavior)

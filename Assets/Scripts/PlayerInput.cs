@@ -1,25 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using CharacterMechanics;
 using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    public float horizontalInput;
-    public float verticalInput;
-    public bool jumpInput;
-    public bool speedUp;
+    private CharacterMovement _characterMovement;
 
-    void Update()
+    public float walkSpeed = 2f;
+    public float runSpeed = 6f;
+
+    private void Start()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
-        jumpInput = Input.GetButtonDown("Jump");
-        speedUp = Input.GetKey(KeyCode.LeftShift);
+        _characterMovement = GetComponent<CharacterMovement>();
     }
 
-    private void OnDisable()
+    private void Update()
     {
-        horizontalInput = 0f;
-        verticalInput = 0f; 
+        HandleMovement();
+        HandleJump();
+    }
+
+    private void HandleMovement()
+    {
+        float moveX = Input.GetAxis("Horizontal");
+        float moveZ = Input.GetAxis("Vertical");
+
+        Vector3 moveDirection = new Vector3(moveX, 0, moveZ).normalized;
+
+        if(moveDirection.magnitude > 0)
+        {
+            bool isRunning = Input.GetKey(KeyCode.LeftShift);
+            _characterMovement.Move(moveDirection, isRunning);
+        }
+        else
+        {
+            _characterMovement.Stop();
+        }
+    }
+
+    private void HandleJump()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            _characterMovement.Jump();  // Обрабатываем прыжок
+        }
     }
 }
