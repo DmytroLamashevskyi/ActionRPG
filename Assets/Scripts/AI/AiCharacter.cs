@@ -1,6 +1,6 @@
-﻿using CharacterMechanics;
+﻿using CharacterMechanics; 
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.AI; 
 
 namespace Game.AI
 {
@@ -24,12 +24,14 @@ namespace Game.AI
         public float actionRange;
         public float patruleSpeed;
         public float chaseSpeed;
+        public float patrolWaitTime = 2f;
 
 
         protected AIController _aiController;
-        protected int _currentPatrolIndex = 0;
+        public int CurrentPatrolIndex { get; protected set; } = 0;
         protected CharacterMovement _characterMovement;
         private float _remainingDistance = 0.6f;
+        protected bool isWaiting = false;
 
         void Awake()
         {
@@ -72,8 +74,8 @@ namespace Game.AI
              
             if(navAgent.remainingDistance < _remainingDistance)
             {
-                _currentPatrolIndex = (_currentPatrolIndex + 1) % patrolPoints.Length;
-                navAgent.SetDestination(patrolPoints[_currentPatrolIndex].position);
+                CurrentPatrolIndex = (CurrentPatrolIndex + 1) % patrolPoints.Length;
+                navAgent.SetDestination(patrolPoints[CurrentPatrolIndex].position);
             }
 
             var direction = navAgent.desiredVelocity.normalized;
@@ -90,6 +92,60 @@ namespace Game.AI
             }
 
             Debug.Log("Враг патрулирует между точками");
+        }
+
+        internal void SetNextPatrolPoint()
+        {
+            if(patrolPoints.Length == 0)
+                return;
+
+            // Случайный выбор следующей точки
+            int nextPatrolIndex = CurrentPatrolIndex;
+            if(patrolPoints.Length > 1)
+            {
+                while(nextPatrolIndex == CurrentPatrolIndex)
+                {
+                    nextPatrolIndex = UnityEngine.Random.Range(0, patrolPoints.Length);
+                }
+            }
+
+            CurrentPatrolIndex = nextPatrolIndex;
+            navAgent.SetDestination(patrolPoints[CurrentPatrolIndex].position);
+            Debug.Log("Следующая патрульная точка: " + CurrentPatrolIndex);
+        }
+
+
+        // Отрисовка патрульных точек и путей между ними в сцене
+        private void OnDrawGizmos()
+        {
+            if(patrolPoints.Length == 0)
+                return;
+
+            // Отрисовка сфер в местах патрульных точек
+            Gizmos.color = Color.green;
+            for(int i = 0; i < patrolPoints.Length; i++)
+            {
+                if(patrolPoints[i] != null)
+                {
+                    Gizmos.DrawSphere(patrolPoints[i].position, 0.5f); // Сфера радиусом 0.5
+                }
+            }
+
+            // Отрисовка линий между патрульными точками
+            Gizmos.color = Color.blue;
+            for(int i = 0; i < patrolPoints.Length - 1; i++)
+            {
+                if(patrolPoints[i] != null && patrolPoints[i + 1] != null)
+                {
+                    Gizmos.DrawLine(patrolPoints[i].position, patrolPoints[i + 1].position);
+                }
+            }
+
+            // Если есть замыкание маршрута
+            if(patrolPoints.Length > 2 && patrolPoints[patrolPoints.Length - 1] != null && patrolPoints[0] != null)
+            {
+                Gizmos.DrawLine(patrolPoints[patrolPoints.Length - 1].position, patrolPoints[0].position);
+            }
         }
     }
 
