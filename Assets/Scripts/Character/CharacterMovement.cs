@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace CharacterMechanics
 { 
@@ -11,11 +12,14 @@ namespace CharacterMechanics
         public float runSpeed = 6f;
         public float jumpHeight = 1.5f;
         public float gravity = -9.81f;
-        public float rotationSpeed = 10f;  // Скорость поворота
+        public float rotationSpeed = 10f;
+        public float attackSpeedMultiplier = 0.5f;  // Скорость поворота
 
         private Vector3 _moveDirection;
         private Vector3 _velocity;
         private bool _isGrounded;
+        private bool _isAttacking = false;
+
 
         public Transform groundCheck;
         public float groundDistance = 0.4f;
@@ -54,6 +58,10 @@ namespace CharacterMechanics
                 RotateTowardsDirection(_moveDirection);
             }
 
+            if(_isAttacking)
+            {
+                speed *= attackSpeedMultiplier;  // Уменьшаем скорость во время атаки
+            }
             // Обновляем анимацию движения
             _characterAnimator.UpdateMovementAnimation(_moveDirection.magnitude, isRunning);
         }
@@ -66,6 +74,25 @@ namespace CharacterMechanics
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
 
+        public Vector3 GetMoveDirection()
+        {
+            return _moveDirection.normalized;
+        }
+
+        public void PerformDash(Vector3 direction, float dashDistance)
+        {
+            Vector3 dashVector = direction * dashDistance;
+            _characterController.Move(dashVector * Time.deltaTime);  // Выполняем рывок
+        }
+
+        public void StartAttack()
+        {
+            _isAttacking = true;
+        }
+        public void EndAttack()
+        {
+            _isAttacking = false;
+        }
         public void Jump()
         {
             if(_isGrounded)
@@ -80,17 +107,7 @@ namespace CharacterMechanics
             _moveDirection = Vector3.zero;
             _characterController.Move(_moveDirection);
             _characterAnimator.UpdateMovementAnimation(0, false);  // Останавливаем анимацию
-        }
-
-        public void Attack()
-        {
-            _characterAnimator.PlayAttackAnimation();  // Запуск анимации атаки
-        }
-
-        public void EndAttack()
-        {
-            _characterAnimator.StopAttackAnimation();  // Завершение анимации атаки
-        }
+        } 
 
         public void SetFalling(bool isFalling)
         {

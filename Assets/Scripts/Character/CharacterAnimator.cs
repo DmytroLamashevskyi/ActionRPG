@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace CharacterMechanics
 {
@@ -27,12 +28,17 @@ namespace CharacterMechanics
         // Запуск анимации атаки
         public void PlayAttackAnimation()
         {
-            _animator.SetBool("isAttacking", true);
+            // Проверяем, не была ли уже запущена атака
+            if(!_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+            {
+                _animator.SetTrigger("Attack");  // Запускаем триггер только если не в состоянии атаки
+            }
         }
 
+        // Завершение анимации атаки
         public void StopAttackAnimation()
         {
-            _animator.SetBool("isAttacking", false);
+            _animator.ResetTrigger("Attack");  // Сбрасываем триггер после завершения атаки
         }
 
         // Запуск анимации падения
@@ -45,6 +51,11 @@ namespace CharacterMechanics
         public void PlayDeathAnimation()
         {
             _animator.SetTrigger("die");
+        }
+
+        internal void SetAttackAnimationSpeed(float animationSpeedMultiplier)
+        {
+            _animator.SetFloat("AttackSpeed", animationSpeedMultiplier);
         }
     }
 

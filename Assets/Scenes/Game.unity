@@ -946,7 +946,6 @@ GameObject:
   - component: {fileID: 618932797}
   - component: {fileID: 618932799}
   - component: {fileID: 618932798}
-  - component: {fileID: 618932802}
   - component: {fileID: 618932808}
   - component: {fileID: 618932807}
   - component: {fileID: 618932806}
@@ -1040,19 +1039,6 @@ CharacterController:
   m_SkinWidth: 0.001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.93, z: 0}
---- !u!114 &618932802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 618932795}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 258d79c7cfd3ebc4ba586f89832a2233, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  footSteps: {fileID: 746542579}
 --- !u!114 &618932803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1067,8 +1053,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   navAgent: {fileID: 618932798}
   target: {fileID: 1385753604}
-  detectionRange: 200
-  actionRange: 10
+  detectionRange: 10
+  actionRange: 0.5
 --- !u!114 &618932804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1099,6 +1085,7 @@ MonoBehaviour:
   jumpHeight: 1.5
   gravity: -9.81
   rotationSpeed: 10
+  attackSpeedMultiplier: 0.5
   groundCheck: {fileID: 2143058375}
   groundDistance: 0.4
   groundMask:
@@ -1277,11 +1264,6 @@ PrefabInstance:
 --- !u!4 &746542578 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6572561595865496312, guid: c2792d034b3f4154281cad9326455974, type: 3}
-  m_PrefabInstance: {fileID: 746542577}
-  m_PrefabAsset: {fileID: 0}
---- !u!2083052967 &746542579 stripped
-VisualEffect:
-  m_CorrespondingSourceObject: {fileID: 6572561595865496319, guid: c2792d034b3f4154281cad9326455974, type: 3}
   m_PrefabInstance: {fileID: 746542577}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &754699147
@@ -2254,6 +2236,7 @@ GameObject:
   - component: {fileID: 1385753612}
   - component: {fileID: 1385753611}
   - component: {fileID: 1385753616}
+  - component: {fileID: 1385753617}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -2311,6 +2294,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 2
   runSpeed: 6
+  dashDistance: 10
+  doubleShiftTime: 0.3
 --- !u!95 &1385753608
 Animator:
   serializedVersion: 5
@@ -2345,10 +2330,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 3
-  runSpeed: 6
+  runSpeed: 5
   jumpHeight: 1.5
   gravity: -9.81
   rotationSpeed: 10
+  attackSpeedMultiplier: 0.5
   groundCheck: {fileID: 400044975}
   groundDistance: 0.4
   groundMask:
@@ -2416,6 +2402,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86c5794b207e9b42b4be4042a70f30f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1385753617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1385753603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60a77ea9d25f33f4b9b0649384e29073, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackSpeed: 1
 --- !u!114 &1471339993
 MonoBehaviour:
   m_ObjectHideFlags: 0
