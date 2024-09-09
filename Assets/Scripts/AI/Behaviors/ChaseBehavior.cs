@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
 namespace Game.AI
-{
-
+{ 
     public class ChaseBehavior : IAIBehavior
     {
         public void EnterBehavior(AiCharacter character)
         {
+            character.SetMovementSpeed(character.chaseSpeed);
             Debug.Log("Начало преследования");
         }
 

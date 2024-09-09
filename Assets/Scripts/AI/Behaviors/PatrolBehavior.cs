@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
 namespace Game.AI
-{
-
+{ 
     public class PatrolBehavior : IAIBehavior
     {
         public void EnterBehavior(AiCharacter character)
         {
+            character.SetMovementSpeed(character.patruleSpeed);
             character.Patrol(); // Вход в режим патрулирования
         }
 
