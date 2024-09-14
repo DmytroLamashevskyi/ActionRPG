@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace CharacterMechanics
@@ -31,6 +32,7 @@ namespace CharacterMechanics
             // Проверяем, не была ли уже запущена атака
             if(!_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
             {
+                _animator.SetInteger("attackIndex", UnityEngine.Random.Range(0, 2));
                 _animator.SetTrigger("Attack");  // Запускаем триггер только если не в состоянии атаки
             }
         }

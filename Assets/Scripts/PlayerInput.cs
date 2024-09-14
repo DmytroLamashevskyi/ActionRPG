@@ -3,11 +3,10 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    private CharacterMovement _characterMovement; 
+    private CharacterMovement _characterMovement;
     private CharacterAttack _characterAttack;
+    private DashSkill _dashSkill;
 
-    public float walkSpeed = 2f;
-    public float runSpeed = 6f;
     public float dashDistance = 5f;  // Дистанция рывка
     public float doubleShiftTime = 0.3f;  // Максимальный промежуток между двойным нажатием Shift
 
@@ -18,6 +17,7 @@ public class PlayerInput : MonoBehaviour
     {
         _characterMovement = GetComponent<CharacterMovement>();
         _characterAttack = GetComponent<CharacterAttack>();
+        _dashSkill = GetComponent<DashSkill>();  // Добавляем компонент DashSkill
     }
 
     private void Update()
@@ -27,6 +27,7 @@ public class PlayerInput : MonoBehaviour
             HandleJump();
             HandleDash();
         }
+
         HandleMovement();
         HandleAttack();
     }
@@ -65,7 +66,7 @@ public class PlayerInput : MonoBehaviour
             float currentTime = Time.time;
 
             // Если время между нажатиями Shift меньше doubleShiftTime, выполняем рывок
-            if(currentTime - _lastShiftTime <= doubleShiftTime)
+            if(currentTime - _lastShiftTime <= doubleShiftTime && _dashSkill.CanDash())
             {
                 PerformDash();
             }
@@ -79,7 +80,7 @@ public class PlayerInput : MonoBehaviour
     {
         // Выполняем рывок в направлении движения
         Vector3 dashDirection = _characterMovement.GetMoveDirection();
-        _characterMovement.PerformDash(dashDirection, dashDistance);
+        _dashSkill.PerformDash(dashDirection, dashDistance);
     }
 
     private void HandleAttack()
@@ -91,7 +92,7 @@ public class PlayerInput : MonoBehaviour
             _characterAttack.Attack();  // Запускаем анимацию атаки
 
             float attackDuration = _characterAttack.GetAttackSpeed();
-            Invoke("EndAttack", attackDuration);   
+            Invoke("EndAttack", attackDuration);
         }
     }
 

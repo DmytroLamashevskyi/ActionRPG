@@ -116,7 +116,7 @@ namespace Game.AI
 
 
         // Отрисовка патрульных точек и путей между ними в сцене
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
             if(patrolPoints.Length == 0)
                 return;
@@ -145,7 +145,15 @@ namespace Game.AI
             if(patrolPoints.Length > 2 && patrolPoints[patrolPoints.Length - 1] != null && patrolPoints[0] != null)
             {
                 Gizmos.DrawLine(patrolPoints[patrolPoints.Length - 1].position, patrolPoints[0].position);
-            }
+            } 
+
+            // Отрисовка радиуса обнаружения (зелёный)
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, detectionRange);
+
+            // Отрисовка радиуса действия (оранжевый)
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, actionRange);
         }
     }
 

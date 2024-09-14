@@ -120,7 +120,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.20031959
+        functionName: ActivateVFX
+        data: SwordBlade01
+        objectReferenceParameter: {fileID: 11500000, guid: e6f506af8a7130f40961c2e0d2226b2d, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.98311615
+        functionName: DeactivateVFX
+        data: SwordBlade01
+        objectReferenceParameter: {fileID: 11500000, guid: e6f506af8a7130f40961c2e0d2226b2d, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
@@ -149,7 +163,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.2712806
+        functionName: ActivateVFX
+        data: SwordBlade02
+        objectReferenceParameter: {fileID: 11500000, guid: e6f506af8a7130f40961c2e0d2226b2d, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.9533762
+        functionName: DeactivateVFX
+        data: SwordBlade02
+        objectReferenceParameter: {fileID: 11500000, guid: e6f506af8a7130f40961c2e0d2226b2d, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
